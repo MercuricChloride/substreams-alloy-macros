@@ -35,8 +35,7 @@ fn impl_json_sol_types(ast: &syn::DeriveInput) -> TokenStream {
                 let key = #name.to_string();
                 let value: ::substreams_alloy_helpers::prelude::SolidityType = self.#name_ident.clone().into();
                 let value: ::substreams_alloy_helpers::prelude::SolidityJsonValue = value.into();
-                let value = ::serde_json::to_string(&value).unwrap();
-                output_map.insert(key, value.into());
+                output_map.insert(key, serde_json::to_value(value).unwrap());
             };
             statement
         })
